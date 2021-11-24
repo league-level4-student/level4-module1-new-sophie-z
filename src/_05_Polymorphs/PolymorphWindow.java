@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -60,7 +61,10 @@ public class PolymorphWindow extends JPanel implements ActionListener {
     private JFrame window;
     private Timer timer;
 
-    Polymorph bluePoly;
+//    Polymorph bluePoly;
+//    RedPolymorph redPoly;
+//    MovingMorph movingMorph;
+    ArrayList <Polymorph> polymorphs = new ArrayList <Polymorph>();;
 
     public static void main(String[] args) {
         new PolymorphWindow().buildWindow();
@@ -73,8 +77,19 @@ public class PolymorphWindow extends JPanel implements ActionListener {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.pack();
         window.setVisible(true);
+        MouseMorph mouseMorph = new MouseMorph(200, 200, 50, 50);
+        window.addMouseMotionListener(mouseMorph);
+        MessageMorph messageMorph = new MessageMorph(250, 250, 50, 50);
+        window.addMouseListener(messageMorph);
 
-        bluePoly = new BluePolymorph(50, 50);
+//        bluePoly = new BluePolymorph(100, 100, 50, 50);
+//        redPoly = new RedPolymorph(50, 50, 50, 50);
+//        movingMorph = new MovingMorph(150, 150, 50, 50);
+        polymorphs.add(new BluePolymorph(100, 100, 50, 50));
+        polymorphs.add(new RedPolymorph(50, 50, 50, 50));
+        polymorphs.add(new MovingMorph(150, 150, 50, 50));
+        polymorphs.add(mouseMorph);
+        polymorphs.add(messageMorph);
 
         timer = new Timer(1000 / 30, this);
         timer.start();
@@ -86,13 +101,22 @@ public class PolymorphWindow extends JPanel implements ActionListener {
         g.fillRect(0, 0, 500, 500);
 
         // draw polymorph
-        bluePoly.draw(g);
+//        bluePoly.draw(g);
+//        redPoly.draw(g);
+//        movingMorph.draw(g);
+        for(Polymorph p : polymorphs) {
+        	p.draw(g);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
-        bluePoly.update();
-
+//        bluePoly.update();
+//        redPoly.update();
+//        movingMorph.update();
+        for(Polymorph p : polymorphs) {
+        	p.update();
+        }
     }
 }
